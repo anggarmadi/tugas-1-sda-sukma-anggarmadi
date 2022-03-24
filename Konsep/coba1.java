@@ -7,9 +7,10 @@ import java.util.Stack;
 
 public class coba1 {
     public static void main(String[] args) {
-        int n=10, m=10,x=0,y=0; 
+        int n=10, m=10,x=0,y=0,z=0; 
         int jumsuper=300, jumbiasa=300;
         int []pesanantelur = new int[50];
+        String []jenisTelur = new String[50];
         
         Queue<String> pembeli = new LinkedList<>();
         Stack<Integer> telur1 = new Stack<>();
@@ -38,7 +39,8 @@ public class coba1 {
             System.out.println("2. Panggil Pemesan");
             System.out.println("3. Cek Persediaan Telur");
             System.out.println("4. Daftar Antrian");
-            System.out.println("5. Keluar Program");
+            System.out.println("5. Tambah Persediaan");
+            System.out.println("6. Keluar Program");
             System.out.print("Pilih menu: ");
             int menu = pilih.nextInt();
 
@@ -55,15 +57,24 @@ public class coba1 {
                     System.out.print("Pilih: ");
                     int pilihan = pilih.nextInt();
 
-                    if(pilihan==1 && pilihan<jumbiasa){
+                    if(pilihan==1){
                         System.out.println("Inputkan jumlah telur yang akan dibeli");
                         System.out.print("Jumlah(butir): ");
                         int beli = pilih.nextInt();
-                        pesanantelur[x]=beli;
-                        x++;
-                        System.out.println("Terima kasih, silahkan lakukan pembayaran");
-                        System.out.println("Total harga :Rp."+beli*hbiasa);
                         int bayar;
+                        if(beli<jumbiasa){
+                            pesanantelur[x]=beli;
+                            jenisTelur[y]="telur biasa";
+                            jumbiasa=jumbiasa-beli;
+                            x++; y++;
+                            System.out.println("Terima kasih, silahkan lakukan pembayaran");
+                            System.out.println("Total harga :Rp."+beli*hbiasa);
+                        }else{
+                            System.out.println("Maaf, Persediaan telur tidak cukup");
+                            System.out.println("Harap isi ulang stok");
+                            break;
+                        }
+                        
                         do{
                             System.out.print("Bayar: ");
                             bayar = pilih.nextInt();
@@ -77,10 +88,18 @@ public class coba1 {
                         System.out.println("Inputkan jumlah telur yang akan dibeli");
                         System.out.print("Jumlah(butir): ");
                         int beli = pilih.nextInt();
-                        pesanantelur[x]=beli;
-                        x++;
-                        System.out.println("Terima kasih, silahkan lakukan pembayaran");
-                        System.out.println("Total harga :Rp."+beli*hsuper);
+                        if(beli<jumbiasa){
+                            pesanantelur[x]=beli;
+                            jenisTelur[y]="telur super";
+                            jumsuper=jumsuper-beli;
+                            x++; y++;
+                            System.out.println("Terima kasih, silahkan lakukan pembayaran");
+                            System.out.println("Total harga :Rp."+beli*hsuper);
+                        }else{
+                            System.out.println("Maaf, Persediaan telur tidak cukup");
+                            System.out.println("Harap isi ulang stok");
+                            break;
+                        }
                         int bayar;
                         do{
                             System.out.print("Bayar: ");
@@ -98,18 +117,93 @@ public class coba1 {
                 
                 case 2:
                     System.out.println("Pesanan atas nama:"+pembeli.peek());
+                    pembeli.poll();
                     System.out.println("Jumlah pesanan:");
-                    System.out.println(pesanantelur[y]+" Butir Telur");
+                    System.out.println(pesanantelur[z]+" Butir Telur");
+                    if(jenisTelur[z]=="telur biasa"){
+                        int b = telur1.size()-1;
+                        int ambil=pesanantelur[z];
+                        if(ambil<(telur1.get(b))){
+                            telur1.set(b, (telur1.get(b))-ambil);    
+                        }else if(ambil==(telur1.get(b))){
+                            telur1.pop();
+                        }else{
+                            while(ambil>(telur1.get(b))){
+                                ambil=ambil-telur1.get(b);
+                                telur1.pop();
+                                b--;
+                            }
+                            telur1.set(b, (telur1.get(b))-ambil);
+                        }
+                    } else if(jenisTelur[z]=="telur super"){
+                        int b = telur2.size()-1;
+                        int ambil=pesanantelur[z];
+                        if(ambil<(telur2.get(b))){
+                            telur2.set(b, (telur2.get(b))-ambil);    
+                        }else if(ambil==(telur2.get(b))){
+                            telur2.pop();
+                        }else{
+                            while(ambil>(telur2.get(b))){
+                                ambil=ambil-telur2.get(b);
+                                telur2.pop();
+                                b--;
+                            }
+                            telur2.set(b, (telur2.get(b))-ambil);
+                        }
+                    }
                     
-                    y++;
+                    z++;
                     break;
+                
+                case 3:
+                    System.out.println("Stok telur biasa: "+telur1);
+                    System.out.println("Stok telur biasa: "+jumbiasa);
+                    System.out.println("Stok telur super: "+telur2);
+                    System.out.println("Stok telur super: "+jumsuper);
+                    break;
+
                 case 4:
                     System.out.println("Daftar antrian :"+pembeli);
                     pilih.next();
                     break;
 
-
+                case 5:
+                    System.out.println("Pilih jenis telur yang akan diisi:");
+                    System.out.println("1. Telur Biasa");
+                    System.out.println("2. Telur Super");
+                    int stok = pilih.nextInt();
+                    if(stok==1){
+                        System.out.println("Jumlah(karpet): ");
+                        int tambah = pilih.nextInt();
+                        if(tambah>0){
+                            for(int i=0;i<tambah;i++){
+                                telur1.add(30);
+                            }
+                        }else {
+                            System.out.println("Nilai tidak valid");
+                        }
+                    } else if(stok==2){
+                        System.out.println("Jumlah(karpet): ");
+                        int tambah = pilih.nextInt();
+                        if(tambah>0){
+                            for(int i=0;i<tambah;i++){
+                                telur2.add(30);
+                            }
+                        }else {
+                            System.out.println("Nilai tidak valid");
+                        }
+                    } else {
+                        System.out.println("Maaf, Pilihan tidak tersedia");
+                    }
+                    break;
+                    case 6:
+                        finish++;
+                        break;
+                    
+                    default:
+                        System.out.println("Error!!");
             }
+
 
 
         } while(finish==-1);
