@@ -81,7 +81,7 @@ public class coba1 {
                             if(bayar<beli*hbiasa)
                                 System.out.println("Maaf, uang yang anda inputkan kurang");    
                         }while(bayar<beli*hbiasa);
-                        System.out.print("Kebalian :Rp. "+(bayar-beli*hbiasa));
+                        System.out.print("Kembalian :Rp. "+(bayar-beli*hbiasa));
                         pembeli.add(nama);
                         System.out.println("");
                     }else if(pilihan==2 && pilihan<jumsuper){
@@ -107,7 +107,7 @@ public class coba1 {
                             if(bayar<beli*hsuper)
                                 System.out.println("Maaf, uang yang anda inputkan kurang");    
                         }while(bayar<beli*hsuper);
-                        System.out.print("Kebalian :Rp. "+(bayar-beli*hsuper));
+                        System.out.print("Kembalian :Rp. "+(bayar-beli*hsuper));
                         pembeli.add(nama);
                         System.out.println("");
                     }else{
